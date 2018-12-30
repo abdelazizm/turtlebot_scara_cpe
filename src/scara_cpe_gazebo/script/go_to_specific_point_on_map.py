@@ -19,7 +19,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 # running prior to starting this script
 # For simulation: launch gazebo world & amcl_demo prior to run this script
 import roslib
-roslib.load_manifest('scara_cpe_gazebo')
 
 import rospy
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
@@ -81,20 +80,64 @@ if __name__ == '__main__':
         rospy.init_node('nav_test', anonymous=False)
         navigator = GoToPose()
 
-        # Customize the following values so they are appropriate for your location
-        position = {'x': 3.52, 'y' : -1.7}
-        quaternion = {'r1' : 0.000, 'r2' : 0.000, 'r3' : 0.000, 'r4' : 1.000}
 
-        rospy.loginfo("Go to (%s, %s) pose", position['x'], position['y'])
-        success = navigator.goto(position, quaternion)
+	# Customize the following values so they are appropriate for your location
 
-        if success:
-            rospy.loginfo("Hooray, reached the desired pose")
-        else:
-            rospy.loginfo("The base failed to reach the desired pose")
+	position = {'x': 3.52, 'y' : -1.7}
+	quaternion = {'r1' : 0.000, 'r2' : 0.000, 'r3' : 0.000, 'r4' : 1.000}
+	rospy.loginfo("Go to (%s, %s) pose", position['x'], position['y'])
+	success = navigator.goto(position, quaternion)
 
-        # Sleep to give the last log messages time to be sent
-        rospy.sleep(1)
+	if success:
+		rospy.loginfo("Hooray, reached the coin position")
+	else:
+		rospy.loginfo("The base failed to reach the desired pose")
+
+	# Sleep to give the last log messages time to be sent
+	rospy.sleep(1)
+
+
+	position_coin1 = {'x': 2.589333, 'y' : -0.321235}
+	position_coin2 = {'x': 2.556730, 'y' : -0.100126}
+	position_final1= {'x': 2.538429, 'y' : 0.714428}
+	position_final2= {'x': 2.505826, 'y' : 0.935537}
+	quaternion = {'r1' : 0.000, 'r2' : 0.000, 'r3' : 0.000, 'r4' : 1.000}
+
+	rospy.loginfo("Go to (%s, %s) pose", position_coin1['x'], position_coin1['y'])
+	success = navigator.goto(position_coin1, quaternion)
+
+	if success:
+		rospy.loginfo("Hooray, reached the coin position")
+	else:
+		rospy.loginfo("The base failed to reach the desired pose")
+
+	# Sleep to give the last log messages time to be sent
+	rospy.sleep(1)
+	rospy.loginfo("Go to (%s, %s) pose", position_final1['x'], position_final1['y'])
+	success = navigator.goto(position_final1, quaternion)
+	if success:
+		rospy.loginfo("Hooray, reached the final position")
+	else:
+		rospy.loginfo("The base failed to reach the desired pose")
+	rospy.sleep(1)
+	rospy.loginfo("Go to (%s, %s) pose", position_coin2['x'], position_coin2['y'])
+	success = navigator.goto(position_coin2, quaternion)
+
+	if success:
+		rospy.loginfo("Hooray, reached the coin position")
+	else:
+		rospy.loginfo("The base failed to reach the desired pose")
+
+	# Sleep to give the last log messages time to be sent
+	rospy.sleep(1)
+	rospy.loginfo("Go to (%s, %s) pose", position_final2['x'], position_final2['y'])
+	success = navigator.goto(position_final2, quaternion)
+	if success:
+		rospy.loginfo("Hooray, reached the final position")
+	else:
+		rospy.loginfo("The base failed to reach the desired pose")
+	rospy.sleep(1)
+
 
     except rospy.ROSInterruptException:
         rospy.loginfo("Ctrl-C caught. Quitting")
