@@ -25,8 +25,8 @@
 
   <!-- the robot -->
   <xacro:kobuki />
-  <xacro:stack_hexagons parent="base_link" />
-  <xacro:sensor_kinect parent="base_link" />
+  <xacro:stack_hexagons parent="base_footprint" />
+  <xacro:sensor_kinect parent="base_footprint" />
 
 
 
@@ -36,6 +36,7 @@
     <visual>
       <!--<origin xyz="0 0.17 0.38" rpy="-${PI_half} 0 -${PI_half}" />-->
       <origin xyz="0 0.034 0" rpy="-${PI_half} 0 -${PI_half}" />
+        <!--<origin xyz="0.136 0 0" rpy="-${PI_half} 0 -${PI}" />-->
       <geometry>
         <mesh filename="package://scara_cpe_description/urdf/scara_cpe-base_link.dae" scale="0.001 0.001 0.001"/>
       </geometry>
@@ -117,16 +118,16 @@
 
  <!-- JOINT -->
   <joint name="base_scara" type="fixed">
-    <parent link="base_link"/>
+    <parent link="base_footprint"/>
     <child link="base_cpe"/>
-    <origin xyz="0 0.136 0.415" rpy="0 0 0" />
+    <!--<origin xyz="0 0.136 0.415" rpy="0 0 0" />-->
     <!--<origin xyz="0 0 .035" rpy="0 0 0" />-->
+	<origin xyz="0.09 0 0.415" rpy="0 0 -${PI_half}" />
   </joint>
 
   <joint name="shoulder_1_joint" type="revolute">
     <parent link="base_cpe"/>
     <child link="link1"/>
-    <!--<origin xyz="0 0.048 0" rpy="0 0 0" />-->
     <origin xyz="0 0.048 0" rpy="0 0 0" />
 	  <limit effort="1.5" velocity="1.0" lower="-${PI_half}" upper="${PI_half}" />
 	  <axis xyz="0 0 1" />
@@ -135,7 +136,6 @@
   <joint name="shoulder_2_joint" type="revolute">
     <parent link="link1"/>
     <child link="link2"/>
-    <!--<origin xyz="0 0.08 0" rpy="0 0 0" />--> 
     <origin xyz="0 0.08 0" rpy="0 0 0" />
 	  <limit effort="1.5" velocity="1.0" lower="-2.8" upper="2.8" />
 	  <axis xyz="0 0 -1" />
@@ -146,7 +146,6 @@
     <parent link="link2"/>
     <child link="end_link"/>
     <origin xyz="0 0.047 -0.025" rpy="0 0 0" />
-    <!--<origin xyz="0 0.047 -0.025" rpy="0 0 0" />-->
   </joint>
 
 
